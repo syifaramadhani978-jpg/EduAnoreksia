@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <title>EduAnoreksia: Pahami dan Lawan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #A7C7E7, #E6F7E6);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: linear-gradient(135deg, #A8E6A1, #90EE90);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        nav {
+            margin-top: 10px;
+        }
+        .decorative-sun {
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, #FFD700, #FFA500);
+            border-radius: 50%;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+        .decorative-sun::before, .decorative-sun::after {
+            content: '';
+            position: absolute;
+            background: #FFD700;
+            border-radius: 50%;
+        }
+        .decorative-sun::before {
+            width: 4px;
+            height: 20px;
+            top: -20px;
+            left: 18px;
+            transform: rotate(45deg);
+        }
+        .decorative-sun::after {
+            width: 4px;
+            height: 20px;
+            top: 18px;
+            left: -20px;
+            transform: rotate(-45deg);
+        }
+        .decorative-flower {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle, #FF69B4, #FF1493);
+            border-radius: 50%;
+            position: relative;
+            float: right;
+            margin-left: 10px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+        .decorative-flower::before, .decorative-flower::after {
+            content: '';
+            position: absolute;
+            background: #FF69B4;
+            width: 3px;
+            height: 6px;
+            left: 4.5px;
+            border-radius: 50%;
+            transform: rotate(45deg);
+        }
+        .decorative-flower::before {
+            top: -3px;
+        }
+        .decorative-flower::after {
+            bottom: -3px;
+        }
+        nav a {
+            margin: 0 15px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        nav a:hover {
+            color: #FFD700;
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.1);
+            animation: pulse 0.5s;
+        }
+        section {
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 800px;
+            background: linear-gradient(135deg, #E6F7E6, #F0FFF0);
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            animation: fadeIn 1s ease-in;
+            border: 2px solid #A8E6A1;
+        }
+        h2 {
+            color: #967BB6;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+            color: #FFD700;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 220px;
+            background: linear-gradient(135deg, #967BB6, #8A2BE2);
+            color: white;
+            text-align: center;
+            border-radius: 10px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -110px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 0.9;
+        }
+        #quiz button {
+            background: linear-gradient(135deg, #90EE90, #32CD32);
+            border: none;
+            padding: 12px 20px;
+            margin: 8px;
+            border-radius: 25px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        #quiz button:hover {
+            background: linear-gradient(135deg, #967BB6, #8A2BE2);
+            transform: scale(1.05);
+            animation: pulse 0.5s;
+        }
+        #quiz button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        #feedback {
+            color: green;
+            font-weight: bold;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            background: rgba(144, 238, 144, 0.3);
+        }
+        #quiz-results {
+            margin-top: 20px;
+            font-size: 18px;
+            padding: 15px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            color: #333;
+            text-align: center;
+            animation: pulse 1s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        #progress-bar {
+            width: 100%;
+            background: linear-gradient(135deg, #ddd, #bbb);
+            border-radius: 25px;
+            margin-top: 15px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+        #progress {
+            width: 0%;
+            height: 25px;
+            background: linear-gradient(135deg, #4CAF50, #32CD32);
+            border-radius: 25px;
+            text-align: center;
+            line-height: 25px;
+            color: white;
+            transition: width 0.5s ease;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        ul li {
+            background: rgba(255, 255, 255, 0.5);
+            margin: 10px 0;
+            padding: 10px 15px;
+            border-radius: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        @media (max-width: 768px) {
+            section { margin: 15px; padding: 20px; }
+            nav a { margin: 5px; padding: 8px 12px; }
+            .decorative-sun { width: 30px; height: 30px; top: 5px; right: 5px; }
+            .decorative-flower { width: 10px; height: 10px; margin-left: 5px; }
+            #quiz button { padding: 10px 15px; margin: 5px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>EduAnoreksia</h1>
+        <nav aria-label="Menu navigasi utama">
+            <a href="#pengertian">Pengertian</a>
+            <a href="#penyebab">Penyebab</a>
+            <a href="#gejala">Gejala</a>
+            <a href="#pencegahan">Pencegahan</a>
+            <a href="#penanganan">Penanganan</a>
+            <a href="#penutup">Penutup</a>
+        </nav>
+        <div class="decorative-sun"></div>
+    </header>
+    <main>
+        <section id="pengertian">
+            <h2>📖 Pengertian Anoreksia</h2>
+            <p>Anoreksia nervosa adalah <span class="tooltip">gangguan makan<span class="tooltiptext">Penolakan mempertahankan berat badan sehat.</span></span> yang ditandai dengan ketakutan berlebih terhadap kenaikan berat badan. Jenisnya meliputi restricting type dan binge-purge type, dengan efek seperti masalah jantung dan depresi.</p>
+        </section>
+        <section id="penyebab">
+            <h2>🔍 Penyebab Anoreksia</h2>
+            <p>Penyebab melibatkan faktor genetik, tekanan psikologis, dan faktor sosial.</p>
+            <ul>
+                <li>Faktor genetik. 🧬 <span class="decorative-flower"></span></li>
+                <li>Tekanan psikologis. 🧠 <span class="decorative-flower"></span></li>
+                <li>Faktor sosial. 🌟 <span class="decorative-flower"></span></li>
+            </ul>
+        </section>
+        <section id="gejala">
+            <h2>⚠️ Gejala Anoreksia</h2>
+            <p>Gejala utama: penurunan berat badan dan kelelahan.</p>
+            <ul>
+                <li>Penurunan berat badan. ⚖️ <span class="decorative-flower"></span></li>
+                <li>Kelelahan. 😴 <span class="decorative-flower"></span></li>
+                <li>Obsesi dengan makanan. 🍎 <span class="decorative-flower"></span></li>
+            </ul>
+        </section>
+        <section id="pencegahan">
+            <h2>🛡️ Pencegahan Anoreksia</h2>
+            <p>Cara mencegah: pendidikan citra tubuh positif dan gaya hidup sehat.</p>
+            <ul>
+                <li>Pendidikan keluarga. 👨‍👩‍👧‍👦 <span class="decorative-flower"></span></li>
+                <li>Menghindari diet ekstrem. 💪 <span class="decorative-flower"></span></li>
+                <li>Dukungan komunitas. 🤝 <span class="decorative-flower"></span></li>
+            </ul>
+        </section>
+        <section id="penanganan">
+            <h2>🩺 Penanganan Anoreksia</h2>
+            <p>Langkah: terapi kognitif dan konseling.</p>
+            <ul>
+                <li>Terapi kognitif. 🧠 <span class="decorative-flower"></span></li>
+                <li>Konseling psikologis. 💬 <span class="decorative-flower"></span></li>
+                <li>Pengobatan medis. 💊 <span class="decorative-flower"></span></li>
+            </ul>
+        </section>
+        <section id="penutup">
+            <h2>🎉 Penutup: Tes Pengetahuan Anda!</h2>
+            <p>Sekarang, coba jawab quiz interaktif: <div id="progress-bar"><div id="progress">0%</div></div></p>
+            <div id="quiz">
+                <div id="question-container"></div>
+                <div id="options-container"></div>
+                <button id="next-button" onclick="nextQuestion()" style="display: none;">Next</button>
+                <div id="feedback"></div>
+                <div id="quiz-results"></div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>"Kesehatan adalah harta karun terbesar. Jaga tubuhmu seperti kamu menjaga mimpi-mimpimu!" 🌟</p>
+    </footer>
+    <script>
+        let score = 0;
+        let currentQuestion = 0;
+        const totalQuestions = 10;
+        const questions = [
+            { question: "Apa pengertian anoreksia nervosa?", options: ["Penyakit kulit", "Gangguan makan dengan ketakutan berat badan", "Infeksi virus"], correct: 1 },
+            { question: "Apa salah satu penyebab utama anoreksia?", options: ["Faktor genetik", "Minum air", "Tidur cukup"], correct: 0 },
+            { question: "Sebutkan gejala umum anoreksia?", options: ["Rambut panjang", "Mata biru", "Penurunan berat badan"], correct: 2 },
+            { question: "Bagaimana cara mencegah anoreksia?", options: ["Pendidikan citra tubuh positif", "Merokok", "Tidak makan sama sekali"], correct: 0 },
+            { question: "Apa langkah penanganan anoreksia?", options: ["Olahraga berat", "Terapi dan konseling", "Tidur siang"], correct: 1 },
+            { question: "Apa perbedaan antara restricting type dan binge-purge type?", options: ["Restricting type menghindari makan, binge-purge type makan berlebihan lalu muntah", "Restricting type makan normal, binge-purge type tidak makan", "Keduanya sama"], correct: 0 },
+            { question: "Apa efek anoreksia pada tubuh?", options: ["Kulit lebih halus", "Masalah jantung dan depresi", "Energi berlebih"], correct: 1 },
+            { question: "Bagaimana dukungan keluarga membantu pencegahan?", options: ["Dengan pendidikan citra tubuh positif", "Dengan membiarkan diet ekstrem", "Dengan menghindari diskusi"], correct: 0 },
+            { question: "Apa itu terapi kognitif?", options: ["Terapi fisik", "Terapi obat-obatan saja", "Terapi untuk mengubah pola pikir negatif"], correct: 2 },
+            { question: "Apa peran dukungan komunitas?", options: ["Memberikan dukungan sosial dan edukasi", "Mendorong diet ekstrem", "Mengisolasi individu"], correct: 0 }
+        ];
+
+        function loadQuestion() {
+            if (currentQuestion < totalQuestions) {
+                document.getElementById('question-container').innerHTML = `<h3>Soal ${currentQuestion + 1}: ${questions[currentQuestion].question}</h3>`;
+                const options = questions[currentQuestion].options;
+                document.getElementById('options-container').innerHTML = '';
+                options.forEach((option, index) => {
+                    const button = document.createElement('button');
+                    button.innerHTML = option;
+                    button.onclick = () => checkAnswer(index);
+                    document.getElementById('options-container').appendChild(button);
+                });
+                document.getElementById('next-button').style.display = 'none';
+                document.getElementById('feedback').innerHTML = '';
+            } else {
+                showResults();
+            }
+        }
+
+        function checkAnswer(selectedIndex) {
+            const correctIndex = questions[currentQuestion].correct;
+            if (selectedIndex === correctIndex) {
+                score++;
+                document.getElementById('feedback').innerHTML = 'Benar! 🎉';
+                document.getElementById('feedback').style.color = 'green';
+            } else {
+                document.getElementById('feedback').innerHTML = `Salah. Jawaban yang benar adalah: ${questions[currentQuestion].options[correctIndex]}`;
+                document.getElementById('feedback').style.color = 'red';
+            }
+            document.getElementById('next-button').style.display = 'block';
+            // Disable buttons after selection
+            const buttons = document.querySelectorAll('#options-container button');
+            buttons.forEach(button => button.disabled = true);
+            updateProgress();
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            loadQuestion();
+        }
+
+        function showResults() {
+            let message = '';
+            if (score >= 8) {
+                message = 'Wow! Kamu luar biasa! Skor tinggi menunjukkan pengetahuanmu tentang anoreksia sangat baik. Teruslah menjadi inspirasi bagi orang lain! 🌟';
+            } else if (score >= 5) {
+                message = 'Bagus! Kamu sudah memahami banyak hal tentang anoreksia. Ingat, pengetahuan adalah kunci untuk kesehatan yang lebih baik. Jaga dirimu! 💪';
+            } else {
+                message = 'Jangan khawatir! Setiap langkah belajar adalah kemajuan. Coba lagi dan temukan lebih banyak tentang kesehatan mental. Kamu hebat! 🌈';
+            }
+            document.getElementById('quiz').innerHTML = `<div id="quiz-results">Quiz selesai! Skor Anda: ${score}/${totalQuestions}. ${message}</div>`;
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / totalQuestions) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+            document.getElementById('progress').innerHTML = Math.round(progress) + '%';
+        }
+
+        // Load the first question on page load
+        window.onload = loadQuestion;
+    </script>
+</body>
+</html>
